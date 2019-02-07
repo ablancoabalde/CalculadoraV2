@@ -11,6 +11,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * REVISAR ERRORES DE ENVIO = Y DE ENVIO DE RAIZ Y LAS MUESTRAS POR PANTALLA
+ * CUANDO DEVUELVE EL VALOR Y CONTROLAR QUE UNA VEZ QUE TENGA UN PUNTO UNA
+ * VARIABLE QUE NO SE PUEDE VOLVER A METER
  *
  * @author Alberto
  */
@@ -37,7 +40,6 @@ public class Main extends javax.swing.JFrame {
     // Array de bytes para el recoger la información del servidor
     byte[] resultado = new byte[500];
 
-    //Boolean contador = true;
     Socket clienteSocket;
     InputStream is;
     OutputStream os;
@@ -93,6 +95,7 @@ public class Main extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         txtCaja.setEditable(false);
+        txtCaja.setText("0");
 
         btn7.setText("7");
         btn7.setEnabled(false);
@@ -441,6 +444,8 @@ public class Main extends javax.swing.JFrame {
 
     private void btnPuntoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPuntoActionPerformed
         introducirTxtcaja(btnPunto.getText());
+
+        
         recogerNumero(btnPunto.getText());
     }//GEN-LAST:event_btnPuntoActionPerformed
 
@@ -810,8 +815,7 @@ public class Main extends javax.swing.JFrame {
 
                 String calculo = num1 + "n" + signo + "n" + num2;
 
-               // System.out.println(calculo + " enviado 1º vez");
-
+                // System.out.println(calculo + " enviado 1º vez");
                 functionOsIs(calculo);
 
             } else {
@@ -819,7 +823,6 @@ public class Main extends javax.swing.JFrame {
                 String calculo = memoria + "n" + signo + "n" + num2;
 
                 //System.out.println(calculo + " enviado 2º vez");
-
                 functionOsIs(calculo);
 
             }
@@ -886,7 +889,7 @@ public class Main extends javax.swing.JFrame {
 
         try {
             System.out.println("Calculo que enviamos " + calculo);
-            
+
             os.write(calculo.getBytes());
             is.read(resultado);
 
