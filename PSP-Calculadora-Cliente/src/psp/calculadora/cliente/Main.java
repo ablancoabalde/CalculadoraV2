@@ -810,7 +810,7 @@ public class Main extends javax.swing.JFrame {
 
                 String calculo = num1 + "n" + signo + "n" + num2;
 
-                System.out.println(calculo + " enviado 1º vez");
+               // System.out.println(calculo + " enviado 1º vez");
 
                 functionOsIs(calculo);
 
@@ -818,7 +818,7 @@ public class Main extends javax.swing.JFrame {
 
                 String calculo = memoria + "n" + signo + "n" + num2;
 
-                System.out.println(calculo + " enviado 2º vez");
+                //System.out.println(calculo + " enviado 2º vez");
 
                 functionOsIs(calculo);
 
@@ -885,6 +885,8 @@ public class Main extends javax.swing.JFrame {
     private void functionOsIs(String calculo) {
 
         try {
+            System.out.println("Calculo que enviamos " + calculo);
+            
             os.write(calculo.getBytes());
             is.read(resultado);
 
