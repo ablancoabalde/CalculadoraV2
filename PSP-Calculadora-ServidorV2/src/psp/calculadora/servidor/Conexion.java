@@ -19,19 +19,15 @@ public class Conexion {
 
     Boolean condicionCierre = true;
 
-    byte[] mensaje;
-
     ServerSocket serverSocket;
     InetSocketAddress addr;
     Socket newSocket;
-    InputStream is;
-    OutputStream os;
 
     /**
      * Constructor que abre la conexión y se pone a la escucha de con una
      * direccion y puerto por defecto y llama a la clase calculo que contiene el
      * metodo calculo
-     */
+     */    
     public Conexion() {
 
         try {
@@ -63,7 +59,7 @@ public class Conexion {
                 // En este se le mete un puerto por defecto
                 case JOptionPane.NO_OPTION:
                     addr = new InetSocketAddress("localhost", 5555);
-                    //      System.out.println(addr);
+                   
                     break;
                 // Cierra el servidor
                 default:
@@ -76,11 +72,12 @@ public class Conexion {
 
             // Se hace el bucle do while para que el servidor quede a la escucha nuevas conexiónes con otro servidor
             do {
+
                 //   System.out.println("Aceptando conexiones");
                 newSocket = serverSocket.accept();
 
                 //   System.out.println("Conexión recibida" + " " + newSocket);
-                new hilo(newSocket, is, os).start();
+                new hilo(newSocket).start();
             } while (true);
 
         } catch (IOException e) {
@@ -94,32 +91,30 @@ public class Conexion {
     public class hilo extends Thread {
 
         Socket oldSocket;
-        InputStream oldis;
-        OutputStream oldos;
+        InputStream oldIs;
+        OutputStream oldOs;
+        byte[] mensaje;
 
-        public hilo(Socket newSocket, InputStream isP, OutputStream osP) {
+        public hilo(Socket newSocket) throws IOException {
+
             oldSocket = newSocket;
-            oldis = isP;
-            oldos = osP;
-            System.out.println("socket " + oldSocket);
-
+           
         }
 
         @Override
         public void run() {
 
             try {
-                oldis = oldSocket.getInputStream();
-                oldos = oldSocket.getOutputStream();
+                oldIs = oldSocket.getInputStream();
+                oldOs = oldSocket.getOutputStream();
                 // Se hace un do while para quedar a la espera de nuevos calculos
                 do {
 
-                    mensaje = new byte[500];
-                    oldis.read(mensaje);
-                    System.out.println("Is " + oldis);
+                    mensaje = new byte[2000];
 
-                    System.out.println("Mensaje recibido: " + new String(mensaje));
-                    oldos.write(cal.calculo(new String(mensaje)).getBytes());
+                    oldIs.read(mensaje);
+
+                    oldOs.write(cal.calculo(new String(mensaje)).getBytes());
                 } while (true);
 
                 //newSocket.close();

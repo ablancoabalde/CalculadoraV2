@@ -6,7 +6,10 @@ public class Calculo {
 
     public String calculo(String operacion) {
 
+     
+        
         String[] parts = operacion.split("n");
+               
         float num1 = Float.parseFloat(parts[0]);
 
         float resultado = 0;
@@ -41,7 +44,7 @@ public class Calculo {
                     break;
 
                 default:
-                    System.out.println("hola");
+                    System.out.println("Posible error de envio de signo");
                     break;
             }
 
